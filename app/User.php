@@ -42,4 +42,16 @@ class User extends Authenticatable
         return $this->hasMany('App\Report');
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany('App\Group');
+    }
+
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
+
+
 }

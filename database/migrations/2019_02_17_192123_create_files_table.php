@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTagsTable extends Migration
+class CreateFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->string('title')->unique();
-            $table->primary('title');
+        Schema::create('files', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('path');
+            $table->integer('report_id')->unsigned();
+            $table->foreign('report_id')->references('id')->on('reports');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('files');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupReportTable extends Migration
+class CreateReportTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateGroupReportTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_report', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('report_tag', function (Blueprint $table) {
             $table->integer('report_id')->unsigned();
             $table->foreign('report_id')->references('id')->on('reports');
-            $table->string('group_title');
-            $table->foreign('group_title')->references('title')->on('groups');
+            $table->string('tag_title');
+            $table->foreign('tag_title')->references('title')->on('tags');
+            $table->primary(['report_id', 'tag_title']);
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateGroupReportTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_report');
+        Schema::dropIfExists('report_tag');
     }
 }
