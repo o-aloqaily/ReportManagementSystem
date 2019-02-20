@@ -1,3 +1,5 @@
+<!-- TODO: localization -->
+
 @extends('layouts.app')
 
 @section('title', 'New Report')

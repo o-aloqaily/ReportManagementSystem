@@ -1,3 +1,5 @@
+<!-- TODO: localization -->
+
 @extends('layouts.adminPanel')
 @section('title', 'Reports');
 

@@ -20,6 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('reports', 'ReportController')->middleware('auth');
 
+
+// Admin routes
 Route::middleware('auth')->prefix('admin')->group(function() {
     Route::get('/reports', 'AdminPanelController@index');
 });

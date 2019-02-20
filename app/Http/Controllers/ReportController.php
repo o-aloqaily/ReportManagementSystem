@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Report;
 use App\Group;
+use App\File;
 
 class ReportController extends Controller
 {
@@ -46,14 +47,7 @@ class ReportController extends Controller
         $fields['user_id'] = auth()->user()->id;
         $fields['group_title'] = $request->group;
         $report = Report::create($fields);
-        // $group = Group::find($request->group);
-        // $report->group->associate($group);
-        // $report->save();
-        // if($request->hasFile('photos')) {
-        //     $allowedExtension = ['gif', 'jpg', 'png'];
-        //     $files = $request->file('photos');
-        //     $this->storeFiles($files, $allowedExtension);
-        // }
+        // TODO: add files upload & tags for reports here.
 
 
         
@@ -69,17 +63,20 @@ class ReportController extends Controller
         foreach($files as $file){
             $filename = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
+
+            // check whether the file has an accepted extension
             $check=in_array($extension,$allowedfileExtension);
+
             if($check) {
-                $items= Item::create($request->all());
                 foreach ($request->photos as $photo) {
                     $filename = $photo->store('reportsPhotos');
-                    ItemDetail::create([
-                        'item_id' => $items->id,
-                        'filename' => $filename
+                    File::create([
+                        'report_id' => $reportId,
+                        'path' => $filename
                     ]);
                 }
             }
+
         }
     }
 
