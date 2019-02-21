@@ -24,12 +24,12 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{ config('app.name', 'RMS') }} | Admin Panel</a>
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">{{ config('app.name', 'RMS') }} | {{ __('admin.headerTitle') }}</a>
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
                 <a class="nav-link" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">Logout</a>
+                    document.getElementById('logout-form').submit();">{{ __('auth.logout') }}</a>
                 </li>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
@@ -41,13 +41,13 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="#"><span data-feather="file-text"></span>Reports</a>
+                <a class="nav-link active" href="#"><span data-feather="file-text"></span>{{ __('admin.reports') }}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><span data-feather="users"></span>Groups</a>
+                <a class="nav-link" href="#"><span data-feather="users"></span>{{ __('admin.groups') }}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#"><span data-feather="user"></span>Users</a>
+                <a class="nav-link" href="#"><span data-feather="user"></span>{{ __('admin.users') }}</a>
               </li>
 
             </ul>

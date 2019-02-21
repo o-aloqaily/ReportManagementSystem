@@ -16,6 +16,6 @@ class AdminPanelController extends Controller
     {
         // get all reports in the database.
         $reports = Report::all();
-        return view('reports.reports')->with('reports', $reports);
+        return view('adminPanel.reports')->with('reports', $reports);
     }
 }

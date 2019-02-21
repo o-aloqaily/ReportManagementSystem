@@ -13,11 +13,11 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'logout' => 'Logout',
-    'login' => 'Login',
-    'register' => 'Register',
+    'failed' => 'البريد الإلكتروني أو كلمة المرور خاطئة.',
+    'throttle' => 'لقد حاولت الدخول لمرات عديدة بشكل خاطئ، الرجاء المحاولة بعد :seconds ثانية.',
+    'logout' => 'تسجيل الخروج',
+    'login' => 'تسجيل الدخول',
+    'register' => 'التسجيل',
     
 
 ];
