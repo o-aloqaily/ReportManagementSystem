@@ -8,14 +8,17 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-@import "dashboard";
+
+@import 'material.min';
+
+@import 'dashboard';
 
 
-.navbar-laravel {
-  background-color: #fff !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14);
-}
+// .navbar-laravel {
+//   background-color: #fff !important;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14);
+// }
 
-body {
-  background: #fff;
-}
+// body {
+//   background: #fff;
+// }

@@ -7,6 +7,8 @@
 
 require('./bootstrap');
 
+require('./material.min');
+
 window.Vue = require('vue');
 
 /**
