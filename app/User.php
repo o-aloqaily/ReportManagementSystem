@@ -47,11 +47,27 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Group');
     }
 
-
     public function roles()
     {
-        return $this->belongsToMany('App\Role');
+        return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role');
     }
+
+
+    // Helper Functions
+
+    // Returns true if the user has the role "admin"
+    public function isAdmin()
+    {
+        return $this->roles->contains('admin');
+    }
+
+
+    // Returns the number of groups that the users is enrolled in
+    public function groupsCount()
+    {
+        return $this->groups->count();
+    }
+
 
 
 }

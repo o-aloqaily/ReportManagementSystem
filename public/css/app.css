@@ -17161,6 +17161,15 @@ _:-ms-input-placeholder, :root .demo-graph {
   align-items: center;
 }
 
-.reportsContainer {
+.contentContainer {
   margin: 5%;
+}
+
+.navbar-laravel {
+  background-color: #fff !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14);
+}
+
+body {
+  background: #f5f5f5;
 }

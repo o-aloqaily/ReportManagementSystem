@@ -4,7 +4,7 @@
 
 @section('content')
   @if (count($reports) > 0)
-      <div class="reportsContainer">
+      <div class="contentContainer">
           <table class="col-md-12 mdl-data-table mdl-js-data-table mdl-shadow--2dp">
               <thead>
                   <th>#</th>

@@ -3,19 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Report;
+use App;
 
 class AdminPanelController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getReports()
     {
         // get all reports in the database.
-        $reports = Report::all();
-        return view('adminPanel.reports')->with('reports', $reports);
+        $reports = App\Report::all();
+        return view('admin.reports')->with('reports', $reports);
     }
+
+    public function getGroups()
+    {
+        // get all groups in the database.
+        $groups = App\Group::all();
+        return view('admin.groups')->with('groups', $groups);
+    }
+
+    public function getUsers()
+    {
+        // get all users in the database.
+        $users = App\User::all();
+        return view('admin.users')->with('users', $users);
+    }
+
+
 }

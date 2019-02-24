@@ -47,11 +47,11 @@
           </div>
         </header>
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-          <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">file_copy</i>{{ __('admin.reports') }}</a>
-        <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">group_work</i>{{ __('admin.groups') }}</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">group</i>{{ __('admin.users') }}</a>
+          <a class="mdl-navigation__link" href="{{ route('admin.reports') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">file_copy</i>{{ __('admin.reports') }}</a>
+          <a class="mdl-navigation__link" href="{{ route('admin.groups') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">group_work</i>{{ __('admin.groups') }}</a>
+          <a class="mdl-navigation__link" href="{{ route('admin.users') }}"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">group</i>{{ __('admin.users') }}</a>
           <div class="mdl-layout-spacer"></div>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
+          {{-- <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a> --}}
         </nav>
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
