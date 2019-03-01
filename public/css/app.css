@@ -17162,7 +17162,11 @@ _:-ms-input-placeholder, :root .demo-graph {
 }
 
 .contentContainer {
-  margin: 5%;
+  padding: 5%;
+}
+
+.material-icons {
+  font-size: 20px;
 }
 
 .navbar-laravel {

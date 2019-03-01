@@ -29,5 +29,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/reports', 'AdminPanelController@getReports')->name('reports');
     Route::get('/groups', 'AdminPanelController@getGroups')->name('groups');
     Route::get('/users', 'AdminPanelController@getUsers')->name('users');
+    Route::get('/reports/search', 'AdminPanelController@search')->name('reports.search');
 
 });

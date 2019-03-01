@@ -27,7 +27,7 @@ class Report extends Model
 
     public function user()
     {
-        return $this->belongsToOne('App\User');
+        return $this->belongsTo('App\User');
     }
 
     public function tags()
@@ -43,5 +43,14 @@ class Report extends Model
     public function files()
     {
         return $this->hasMany('App\File');
+    }
+
+    public function hasTags($arrayOfTags) {
+        $diffArray = $this->tags->diff($arrayOfTags);
+        if (sizeof($diffArray) >= 0 && sizeof($diffArray) < sizeof($this->tags))
+            return true;
+        else {
+            return false;
+        }
     }
 }

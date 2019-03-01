@@ -22,7 +22,7 @@
                     <tr>
                       <td class="mdl-data-table__cell--non-numeric">{{ $user->name }}</td>
                       <td class="mdl-data-table__cell--non-numeric">{{ $user->email }}</td>
-                      <td class="mdl-data-table__cell--non-numeric">{{ $user->roles }}</td>
+                      <td class="mdl-data-table__cell--non-numeric">{{ $user->getCurrentRoles() }}</td>
                       <td class="mdl-data-table__cell--non-numeric">{{ $user->groupsCount() }}</td>
                       <td class="mdl-data-table__cell--non-numeric">{{ date('M j, Y', strtotime($user->created_at)) }}</td>
                       <td class="mdl-data-table__cell--non-numeric">

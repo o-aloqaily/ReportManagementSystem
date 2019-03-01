@@ -14,8 +14,9 @@ return [
     'createdAt' => "Created At",
     'viewButton' => 'View',
     'editButton' => 'Edit',
+    'author' => 'Author',
 
     // alt
-    'noReports' => 'There are no reports yet.'
+    'noReports' => 'No reports were found.'
 
 ];

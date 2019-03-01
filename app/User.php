@@ -68,6 +68,23 @@ class User extends Authenticatable
         return $this->groups->count();
     }
 
+    // Returns a string containing the user's roles, separated by a comma ','
+    public function getCurrentRoles()
+    {
+        $roles = '';
+        foreach($this->roles as $role) {
+            if ($roles == '') {
+                $roles = $role->role;
+            } else {
+                $roles = $roles.', '.$role->role;
+            }
+        }
+        return $roles;
+    }
+    
+
+
+
 
 
 }
