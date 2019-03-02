@@ -15,7 +15,7 @@ class AdminPanelController extends Controller
     public function getReports()
     {
         // get all reports in the database.
-        $reports = App\Report::all();
+        $reports = App\Report::paginate(10);
         return view('admin.reports')->with('reports', $reports);
     }
 

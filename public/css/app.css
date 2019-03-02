@@ -17162,10 +17162,28 @@ _:-ms-input-placeholder, :root .demo-graph {
 }
 
 .contentContainer {
-  padding: 5%;
+  padding: 2%;
 }
 
-.material-icons {
+.contentContainerDefault {
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
+.form-group {
+  margin-bottom: 40px;
+}
+
+.marginForSubmitButton {
+  margin-bottom: 60px;
+}
+
+.submitReportButton {
+  bottom: 0;
+  position: absolute;
+  left: 0;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
   font-size: 20px;
 }
 
@@ -17176,4 +17194,8 @@ _:-ms-input-placeholder, :root .demo-graph {
 
 body {
   background: #f5f5f5;
+}
+
+.material-icons {
+  font-size: 20px;
 }

@@ -13,6 +13,8 @@ return [
 
     // fields 
     'titleField' => 'Title',
+    'tags' => 'Tags',
+    'tagsHelper' => 'Enter tags separated by a comma (tag1, tag2, tag3... etc.)',
     'description' => 'Description',
     'group' => 'Group',
     'uploadImages' => 'Upload Images',

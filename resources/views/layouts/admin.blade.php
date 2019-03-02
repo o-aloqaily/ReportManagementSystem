@@ -21,6 +21,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>{{ config('app.name', 'RMS') }} | @yield('title')</title>
 
     <link rel="shortcut icon" href="images/favicon.png">
@@ -55,7 +58,7 @@
         </nav>
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
-      @yield('content')
+        @yield('content')
       </main>
     </div>
   </body>

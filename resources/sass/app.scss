@@ -12,6 +12,8 @@
 
 @import 'dashboard';
 
+@import 'default';
+
 .navbar-laravel {
   background-color: #fff !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14);
@@ -19,4 +21,8 @@
 
 body {
   background: #f5f5f5;
+}
+
+.material-icons {
+  font-size: 20px;
 }

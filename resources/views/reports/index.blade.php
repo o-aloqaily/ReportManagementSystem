@@ -1,12 +1,13 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
-@section('title', __('admin.reports'))
+@section('title', __('user.reports'))
 
 @section('content')
   @if (count($reports) > 0)
-      <div class="contentContainer">
+      <div class="contentContainerDefault">
+        <h3 class="border-bottom-0 pb-4">{{ __('reports.userHeading') }}</h1>
         {{-- Search Section --}}
-      <form class="form-inline row" action="{{ route('admin.reports.search') }}" method="GET">
+        <form class="form-inline row" action="{{ route('admin.reports.search') }}" method="GET">
             <div class="input-group mb-3 col-sm-6 col-xs-5">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="material-icons">search</i></span>
@@ -62,9 +63,6 @@
                 </tbody>      
             </table>
           </div>
-          <div class="row justify-content-center">
-              {{ $reports->links() }}
-          </div>  
       </div>
   @else
     <h5>{{ __('reports.noReports') }}</h4>
