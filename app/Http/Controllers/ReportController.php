@@ -20,7 +20,7 @@ class ReportController extends Controller
     {
         // shows the reports that belong to the groups assigned to the user.
         $user = auth()->user();
-        $reports = Report::whereIn('group_title', $user->groups)->get();
+        $reports = Report::whereIn('group_title', $user->groups)->paginate(10);
         return view('reports.index')->with('reports', $reports);
     }
 

@@ -3,10 +3,10 @@
 @section('title', 'New Report')
 
 @section('content')
-<div class="row">
+<div class="row justify-content-center">
     @include('flash::message')
     @if ($errors->any())
-        <div class="alert alert-danger col-12">
+        <div class="alert alert-danger col-md-8">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>

@@ -63,6 +63,9 @@
                 </tbody>      
             </table>
           </div>
+          <div class="row justify-content-center">
+            {{ $reports->links() }}
+        </div>  
       </div>
   @else
     <h5>{{ __('reports.noReports') }}</h4>
