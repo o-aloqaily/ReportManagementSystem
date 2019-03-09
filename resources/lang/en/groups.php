@@ -14,7 +14,7 @@ return [
     'viewButton' => 'View',
     'editButton' => 'Edit',
     'membersCount' => 'Number of Members',
-
+    'userHeading' => 'Groups you are enrolled in',
 
     // alt
     'noGroups' => 'There are no groups yet.'

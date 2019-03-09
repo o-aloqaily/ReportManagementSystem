@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App;
 
 class GroupController extends Controller
 {
@@ -13,7 +14,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $groups = auth()->user()->groups()->paginate(10);
+        return view('groups.index')->with('groups', $groups);
     }
 
     /**

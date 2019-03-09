@@ -1,10 +1,12 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
-@section('title', __('admin.groups'))
+@section('title', __('user.groups'))
 
 @section('content')
   @if (count($groups) > 0)
-      <div class="contentContainer">
+      <div class="contentContainerDefault">
+        <h3 class="border-bottom-0 pb-4">{{ __('groups.userHeading') }}</h1>
+        {{-- Table Section --}}
         <div class="table-responsive">
           <table class="col-md-12 col-sm-12 col-xs-12 mdl-data-table mdl-js-data-table mdl-shadow--2dp table">
             <thead>
@@ -31,11 +33,35 @@
               @endforeach
   
             </tbody>      
-           </table>
+        </table>
           </div>
+          <div class="row justify-content-center">
+            {{ $groups->links() }}
+        </div>  
       </div>
   @else
-    <h5>{{ __('groups.noGroups') }}</h4>
+    <h5>{{ __('reports.noReports') }}</h4>
   @endif
 @endsection
 
+
+
+{{-- This script changes the placeholder of the search input according to search by selection by the user --}}
+<script>
+  document.addEventListener('DOMContentLoaded', function(){ 
+    const select = document.querySelector('#searchBy');
+    select.addEventListener('change', function() {
+      const query = document.querySelector('#query');
+      if (select.value == 'tag') {
+        query.placeholder = __('reports.enterTag');
+      } else if (select.value == 'user') {
+        query.placeholder = __('reports.enterUser');
+      } else if (select.value == 'group') {
+        query.placeholder = __('reports.enterGroup');
+      } else {
+        query.placeholder = __('reports.enterTitle');
+      }
+    })
+
+  })
+</script>

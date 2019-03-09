@@ -69,13 +69,13 @@ class ReportController extends Controller
         $report->save();
 
         if($request->photos) {
-            $uploadStatus = $this->storeFiles($request->photos, ['png', 'jpg', 'gif'], $report->id);
+            $uploadStatus = $this->storeFiles($request->photos, ['png', 'jpg', 'gif', 'jpeg'], $report->id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
         }
 
         if($request->audios) {
-            $uploadStatus = $this->storeFiles($request->audios, ['mp3'], $report->id);
+            $uploadStatus = $this->storeFiles($request->audios, ['mp3', 'mpga'], $report->id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
         }
@@ -131,7 +131,8 @@ class ReportController extends Controller
      */
     public function show($id)
     {
-        //
+        $report = Report::find($id);
+        return view('reports.show')->with('report', $report);
     }
 
     /**

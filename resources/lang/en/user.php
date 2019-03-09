@@ -9,6 +9,6 @@ return [
     */
 
     // sidebar
-    'reports' => 'My Reports',
-    'groups' => 'My Groups',
+    'reports' => 'Reports',
+    'groups' => 'Groups',
 ];

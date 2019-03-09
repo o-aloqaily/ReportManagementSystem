@@ -25,6 +25,9 @@ return [
     'enterUser' => "Enter report's author...",
     'searchButton' => 'Search',
     'userHeading' => 'These are the reports belonging to your groups.',
+    'create' => 'New Report',
+    'pictures' => 'Report Pictures',
+    'audios' => 'Report Audio Files',
 
     // alt
     'noReports' => 'No reports were found.'

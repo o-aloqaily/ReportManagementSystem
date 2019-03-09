@@ -45,6 +45,25 @@ class Report extends Model
         return $this->hasMany('App\File');
     }
 
+    public function images() {
+        $images = $this->files->filter(function($file, $key) {
+            $allowedExtensions = ['png', 'jpg', 'gif', 'jpeg'];
+            $fileExtension = pathinfo($file->path, PATHINFO_EXTENSION);
+            return in_array($fileExtension, $allowedExtensions);
+        });
+        return $images->all();
+    }
+
+    public function audios() {
+        $audios = $this->files->filter(function($file, $key) {
+            $allowedExtensions = ['mpga', 'mpeg', 'mp3'];
+            $fileExtension = pathinfo($file->path, PATHINFO_EXTENSION);
+            return in_array($fileExtension, $allowedExtensions);
+        });
+        return $audios->all();
+    }
+
+
     public function hasTags($arrayOfTags) {
         $diffArray = $this->tags->diff($arrayOfTags);
         if (sizeof($diffArray) >= 0 && sizeof($diffArray) < sizeof($this->tags))

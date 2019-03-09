@@ -53,7 +53,7 @@ class AdminPanelController extends Controller
 
     public function searchByTitle()
     {
-        $reports = App\Report::where('title', 'like', '%'.Input::get('query').'%')->get();
+        $reports = App\Report::where('title', 'like', '%'.Input::get('query').'%')->paginate(10);
         return view('admin.reports')->with('reports', $reports);
     }
 
@@ -61,7 +61,7 @@ class AdminPanelController extends Controller
     {
         $reports = App\Report::whereHas('group', function ($query) {
             $query->where('title', 'like', '%'.Input::get('query').'%');
-        })->get();
+        })->paginate(10);
         
         return view('admin.reports')->with('reports', $reports);
     }
@@ -70,7 +70,7 @@ class AdminPanelController extends Controller
     {
         $reports = App\Report::whereHas('user', function ($query) {
             $query->where('name', 'like', '%'.Input::get('query').'%');
-        })->get();
+        })->paginate(10);
         
         return view('admin.reports')->with('reports', $reports);
     }
@@ -79,7 +79,7 @@ class AdminPanelController extends Controller
     {
         $reports = App\Report::whereHas('tags', function ($query) {
             $query->where('title', '=', Input::get('query'));
-        })->get();
+        })->paginate(10);
         
         return view('admin.reports')->with('reports', $reports);
     }

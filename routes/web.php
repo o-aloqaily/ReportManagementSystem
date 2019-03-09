@@ -25,6 +25,11 @@ Route::resource('groups', 'GroupController')->middleware('auth');
 // Route::resource('users', 'UserController')->middleware('auth');
 
 
+// route to retrieve report images
+Route::get('/storage/app/{filePath}', 'ImageController@serveReportImage')
+->where(['filePath' => '.*'])->name('serveReportImage');
+
+
 // Admin routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function() {
     Route::get('/reports', 'AdminPanelController@getReports')->name('reports');
