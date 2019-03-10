@@ -3,8 +3,8 @@
 @section('title', __('user.groups'))
 
 @section('content')
-  @if (count($groups) > 0)
       <div class="contentContainerDefault">
+      @if (count($groups) > 0)
         <h3 class="border-bottom-0 pb-4">{{ __('groups.userHeading') }}</h1>
         {{-- Table Section --}}
         <div class="table-responsive">
@@ -37,11 +37,11 @@
           </div>
           <div class="row justify-content-center">
             {{ $groups->links() }}
-        </div>  
+        </div>
+        @else
+        <h5>{{ __('groups.noGroups') }}</h4>
+        @endif    
       </div>
-  @else
-    <h5>{{ __('reports.noReports') }}</h4>
-  @endif
 @endsection
 
 

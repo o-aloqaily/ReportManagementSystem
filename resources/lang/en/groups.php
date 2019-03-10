@@ -17,6 +17,6 @@ return [
     'userHeading' => 'Groups you are enrolled in',
 
     // alt
-    'noGroups' => 'There are no groups yet.'
+    'noGroups' => 'You are not enrolled in any group yet.'
 
 ];

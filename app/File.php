@@ -17,7 +17,7 @@ class File extends Model
     ];
 
 
-    public function reports()
+    public function report()
     {
         return $this->belongsToOne('App\Report');
     }
