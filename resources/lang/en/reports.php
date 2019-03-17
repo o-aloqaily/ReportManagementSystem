@@ -11,6 +11,7 @@ return [
     // table
     'title' => 'Title',
     'tag' => 'Tag',
+    'tags' => 'Tags',
     'group' => 'Group',
     'author' => 'Author',
     'description' => 'Description',
@@ -28,6 +29,10 @@ return [
     'create' => 'New Report',
     'pictures' => 'Report Pictures',
     'audios' => 'Report Audio Files',
+    'newReport' => 'Create New Report',
+    'editReport' => 'Edit',
+    'noPictures' => 'This report has no pictures.',
+    'noAudios' => 'This report has no audios',
 
     // alt
     'noReports' => 'No reports were found.'

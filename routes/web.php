@@ -22,12 +22,15 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('reports', 'ReportController')->middleware('auth');
 Route::resource('groups', 'GroupController')->middleware('auth');
-// Route::resource('users', 'UserController')->middleware('auth');
+Route::resource('users', 'UserController')->middleware('auth');
 
 
-// route to retrieve report images
+// route to retrieve and delete report images
 Route::get('/storage/app/{filePath}', 'ImageController@serveReportImage')
 ->where(['filePath' => '.*'])->name('serveReportImage');
+Route::post('/reports/{id}/images/removeImage', 'ImageController@removeReportImage')->middleware('auth');
+Route::post('/reports/{id}/images', 'ReportController@uploadImages');
+Route::post('/reports/{id}/audios', 'ReportController@uploadAudios');
 
 
 // Admin routes

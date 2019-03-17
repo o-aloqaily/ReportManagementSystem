@@ -13,11 +13,11 @@
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="pb-4">
-                        <span class="h5 pr-4 whiteText">Group </span>
+                        <span class="h5 pr-4 whiteText">{{ __('reports.group') }}</span>
                     <h5 class="d-inline"><span class="badge badge-primary">{{ $report->group->title }}</span></h2>
                     </div>     
                     <div>
-                        <span class="h5 pr-4 whiteText">Tags </span>
+                        <span class="h5 pr-4 whiteText">{{ __('reports.tags') }}</span>
                         @foreach ($report->tags as $tag)
                             <h5 class="d-inline"><span class="badge badge-secondary">{{ $tag->title }}</span></h2>
                         @endforeach   
@@ -37,20 +37,24 @@
                     <div id="caption"></div>
             </div>      
             <div class="row">
-                <div class="filesContainer col-md-6 col-xs-12">
+                <div id="filesContainer" class="filesContainer col-md-6 col-xs-12">
                     <h5 class="pb-2">{{ __('reports.pictures')}}</h5>
                     @if (!$report->images())
-                        <span>This report has no pictures.</span>
+                        <span>{{ __('reports.noPictures')}}</span>
                     @else
+                        <div class="row">
                         @foreach ($report->images() as $image)
-                            <img id="myImg" class="image" src="{{route('serveReportImage', ['filePath' => $image->path])}}" />
+                            <div class="col-4 m-4">
+                                <img id="myImg" class="image img-fluid" src="{{route('serveReportImage', ['filePath' => $image->path])}}" />
+                            </div>
                         @endforeach
+                        </div>
                     @endif
                 </div>
                 <div class="filesContainer col-md-6 col-xs-12">
                     <h5 class="pb-2">{{ __('reports.audios')}}</h5>
                     @if (!$report->images())
-                        <span>This report has no audio files.</span>
+                        <span>{{ __('reports.noAudios')}}</span>
                     @else
                         @foreach ($report->audios() as $audio)
                             <audio controls src="{{route('serveReportImage', ['filePath' => $audio->path])}}">
@@ -68,21 +72,23 @@ document.addEventListener('DOMContentLoaded', function(){
     var modal = document.getElementById('myModal');
 
     // Get the image and insert it inside the modal - use its "alt" text as a caption
-    var img = document.getElementById('myImg');
+    var filesContainer = document.getElementById('filesContainer');
     var modalImg = document.getElementById("img01");
     var captionText = document.getElementById("caption");
-    img.onclick = function(){
-    modal.style.display = "block";
-    modalImg.src = this.src;
-    captionText.innerHTML = this.alt;
+    filesContainer.onclick = function(event){
+        if (event.target.classList.contains('image')) {
+            modal.style.display = "block";
+            modalImg.src = event.target.src;
+            captionText.innerHTML = event.target.alt;
+        }
     }
-
+    
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() { 
-    modal.style.display = "none";
+        modal.style.display = "none";
     }
 })
 </script>

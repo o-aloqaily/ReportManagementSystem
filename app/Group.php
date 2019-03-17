@@ -24,5 +24,10 @@ class Group extends Model
         return $this->users->count();
     }
 
+    public function reportsCount()
+    {
+        return $this->reports->count();
+    }
+
 
 }

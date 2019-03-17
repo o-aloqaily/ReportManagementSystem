@@ -5,7 +5,10 @@
 @section('content')
       <div class="contentContainerDefault">
       @if (count($reports) > 0)
-        <h3 class="border-bottom-0 pb-4">{{ __('reports.userHeading') }}</h1>
+        <div class="row justify-content-between align-items-center">
+          <h3 class="border-bottom-0 pb-4">{{ __('reports.userHeading') }}</h1>
+          <a href="{{ action('ReportController@create') }}" class="btn btn-primary d-flex justify-content-between text-white"><i class="mdl-color-text--white-white-400 material-icons" role="presentation">add</i>{{ __('reports.create') }}</a>
+        </div>
         {{-- Search Section --}}
         <form class="form-inline row" action="{{ route('admin.reports.search') }}" method="GET">
             <div class="input-group mb-3 col-sm-6 col-xs-5">

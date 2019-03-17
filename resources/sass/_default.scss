@@ -21,8 +21,6 @@
 
 
 .image {
-    width: 200px;
-    height: 200px;
     border-radius: 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.39);
 }
@@ -132,4 +130,15 @@
 
   .whiteText {
     color: white;
+  }
+
+  .deleteImageIcon {
+    color: red;
+    // position: absolute;
+    font-size: 30px !important;
+    padding-bottom: 5px;
+  }
+
+  button {
+    border-width: 0px;
   }

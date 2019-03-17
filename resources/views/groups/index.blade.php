@@ -33,9 +33,9 @@
               @endforeach
   
             </tbody>      
-        </table>
-          </div>
-          <div class="row justify-content-center">
+          </table>
+        </div>
+        <div class="row justify-content-center">
             {{ $groups->links() }}
         </div>
         @else

@@ -15,9 +15,9 @@ class CreateRoleUserTable extends Migration
     {
         Schema::create('role_user', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('role');
-            $table->foreign('role')->references('role')->on('roles');
+            $table->foreign('role')->references('role')->on('roles')->onDelete('cascade');
             $table->primary(['user_id', 'role']);
             $table->timestamps();
         });

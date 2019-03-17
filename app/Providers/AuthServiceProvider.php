@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
-        Gate::define('serveReportFile', function ($user, $filePath) {
+        Gate::define('accessReportFile', function ($user, $filePath) {
             foreach($user->groups as $group) {
                 foreach($group->reports as $report) {
                     if ($report->files->contains('path', $filePath))

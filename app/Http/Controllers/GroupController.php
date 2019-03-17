@@ -42,12 +42,18 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $title
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($title)
     {
-        //
+        $group = App\Group::find($title);
+        if (!$group) {
+            return abort(404);
+        }
+        $users = $group->users()->paginate(10);
+        return view('groups.show')->with('group', $group)->with('users', $users);
+
     }
 
     /**

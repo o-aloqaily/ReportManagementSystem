@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('reports.pageTitle'))
+@section('title', __('reports.newReport'))
 
 @section('content')
 <div class="row justify-content-center">
@@ -16,7 +16,7 @@
      @endif
     
 </div>
-<div class="row justify-content-center">
+<div class="row py-4 justify-content-center">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header h3">{{ __('createReport.formTitle') }}</div>

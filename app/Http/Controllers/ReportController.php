@@ -7,6 +7,7 @@ use App\Report;
 use App\Group;
 use App\File;
 use App\Tag;
+use Illuminate\Validation\Rule;
 
 
 class ReportController extends Controller
@@ -20,7 +21,7 @@ class ReportController extends Controller
     {
         // shows the reports that belong to the groups assigned to the user.
         $user = auth()->user();
-        $reports = Report::whereIn('group_title', $user->groups)->paginate(10);
+        $reports = Report::whereIn('group_title', $user->groups->pluck('title'))->paginate(10);
         return view('reports.index')->with('reports', $reports);
     }
 
@@ -43,48 +44,56 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {   
+        $user = auth()->user();
         $validator = $this->validate($request, [
             'title' => 'required',
             'description' => 'required',
-            'group' => 'required',
+            'group' => ['required', Rule::in($user->groups->pluck('title'))],
             'tags' => 'required'
         ]);
-
         if(!$validator)
             $this->invalidFields();
         
         $fields = $request->only(['title', 'description']);
-        $fields['user_id'] = auth()->user()->id;
+        $fields['user_id'] = $user->id;
         $fields['group_title'] = $request->group;
         $report = Report::create($fields);
 
-        $tags = str_replace(' ','',$request->tags);
-        $tags = explode(',', $tags);
-
-        // Create tags and attach them to the report (if the tag exist, it will be attached immediately).
-        foreach($tags as $tag) {
-            $tag = Tag::firstOrCreate(['title' => $tag], ['title' => $tag]);
-            $report->tags()->attach($tag);
-        }
-        $report->save();
+        $this->createAndAttachTags($report, $request->tags);
 
         if($request->photos) {
             $uploadStatus = $this->storeFiles($request->photos, ['png', 'jpg', 'gif', 'jpeg'], $report->id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
         }
-
         if($request->audios) {
             $uploadStatus = $this->storeFiles($request->audios, ['mp3', 'mpga'], $report->id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
+        }      
+        return redirect()->route('reports.index');     
+    }
+
+    // Create tags and attach them to the report (if the tag exist, it will be attached immediately).
+    public function createAndAttachTags($report, $tags) {
+        $tags = str_replace(' ','',$tags);
+        $tags = explode(',', $tags);
+        $tags = array_filter($tags, function($value, $key){
+            if ($value === '')
+                return false;
+            else
+                return true;
+        }, ARRAY_FILTER_USE_BOTH);
+
+        foreach($tags as $tag) {
+            $tag = Tag::firstOrCreate(['title' => $tag], ['title' => $tag]);
+            if($report->tags->contains($tag)) {
+                continue;
+            } else {
+                $report->tags()->attach($tag);
+            }
         }
-
-                
-        return redirect()->route('reports.index');
-
-        
-            
+        $report->save();
     }
 
     /* 
@@ -132,6 +141,9 @@ class ReportController extends Controller
     public function show($id)
     {
         $report = Report::find($id);
+        if (!$report) {
+            return abort(404);
+        }
         return view('reports.show')->with('report', $report);
     }
 
@@ -143,7 +155,12 @@ class ReportController extends Controller
      */
     public function edit($id)
     {
-        //
+        $report = Report::find($id);
+        if (!$report) {
+            return abort(404);
+        }
+        $user = auth()->user();
+        return view('reports.edit')->with('report', $report)->with('groups', $user->groups);
     }
 
     /**
@@ -155,8 +172,49 @@ class ReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = auth()->user();
+        $validator = $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required',
+            'group' => ['required', Rule::in($user->groups->pluck('title'))],
+            'tags' => 'required'
+        ]);
+        if(!$validator)
+            $this->invalidFields();
+        
+        $report = Report::find($id);
+        $report->title = $request->title;
+        $report->description = $request->description;
+        $report->group_title = $request->group;
+        $this->createAndAttachTags($report, $request->tags);
+        $report->save();
+        return redirect()->action('ReportController@edit', $id);
     }
+
+    public function uploadImages(Request $request, $id) {
+        if ($request->photos) {
+            $uploadStatus = $this->storeFiles($request->photos, ['png', 'jpg', 'gif', 'jpeg'], $id);
+            if (!$uploadStatus)
+                return $this->invalidFiles();
+            flash('Images uploaded!')->success();
+        } else {
+            flash('No images were uploaded, please select images then try again')->error();
+        }
+        return redirect()->action('ReportController@edit', $id);
+    }
+
+    public function uploadAudios(Request $request, $id) {
+        if ($request->audios) {
+            $uploadStatus = $this->storeFiles($request->audios, ['mp3', 'mpga'], $id);
+            if (!$uploadStatus)
+                return $this->invalidFiles();
+            flash('Audio files uploaded!')->success();
+        } else {
+            flash('No files were uploaded, please select images then try again')->error();
+        }
+        return redirect()->action('ReportController@edit', $id);
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -166,6 +224,12 @@ class ReportController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $report = Report::find($id);
+        if (!$report) {
+            return abort(404);
+        }
+        $report->delete();
+
+        return redirect()->action('ReportController@index');
     }
 }
