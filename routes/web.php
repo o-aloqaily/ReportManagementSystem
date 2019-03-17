@@ -19,8 +19,9 @@
 Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
-
+Route::get('/reports/search', 'ReportController@search')->middleware('auth');
 Route::resource('reports', 'ReportController')->middleware('auth');
+
 Route::resource('groups', 'GroupController')->middleware('auth');
 Route::resource('users', 'UserController')->middleware('auth');
 

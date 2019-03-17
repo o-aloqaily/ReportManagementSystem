@@ -25,8 +25,7 @@
                   <td class="mdl-data-table__cell--non-numeric">{{ $group->membersCount() }}</td>
                   <td class="mdl-data-table__cell--non-numeric">{{ date('M j, Y', strtotime($group->created_at)) }}</td>
                   <td class="mdl-data-table__cell--non-numeric">
-                    <a href="{{ route('groups.show', $group->title) }}" class="btn btn-success btn-sm">{{ __('groups.viewButton') }}</a>
-                    <a href="{{ route('groups.edit', $group->title) }}" class="btn btn-primary btn-sm">{{ __('groups.editButton') }}</a>
+                    <a href="{{ route('groups.show', $group->title) }}" class="btn btn-success btn-sm btn-block">{{ __('groups.viewButton') }}</a>
                   </td>
                 </tr>
   

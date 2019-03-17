@@ -8,6 +8,7 @@ use App\Group;
 use App\File;
 use App\Tag;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Input;
 
 
 class ReportController extends Controller
@@ -215,7 +216,6 @@ class ReportController extends Controller
         return redirect()->action('ReportController@edit', $id);
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
@@ -232,4 +232,50 @@ class ReportController extends Controller
 
         return redirect()->action('ReportController@index');
     }
+
+    public function search()
+    {
+        // search through reports, forward to appropriate function.
+        if (!Input::get('query')) {
+            return redirect()->action('ReportController@index');
+        }
+
+        switch (Input::get('searchBy')) {
+            case 'title': 
+                return $this->searchByTitle();
+            case 'group':
+                return $this->searchByGroup();
+            case 'tag':
+                return $this->searchByTags();
+        }
+        return redirect()->action('ReportController@index');
+    }
+
+    public function searchByTitle()
+    {
+        $reports = auth()->user()->groups->pluck('reports')->flatten(1)->filter(function($report){
+                return false !== stristr($report->title, Input::get('query'));
+            });
+        return view('reports.index')->with('reports', $reports->paginate(10));
+    }
+
+    public function searchByGroup()
+    {
+        // TODO authorization
+        $group = Group::find(Input::get('query'));
+        if (!$group) {
+            // if no reports were found, pass null to show no reports.
+            return view('reports.index')->with('reports', null);
+        }
+        return view('reports.index')->with('reports', $group->reports->paginate(10));
+    }
+
+    public function searchByTags()
+    {
+        $reports = auth()->user()->groups->pluck('reports')->flatten(1)->filter(function($report){
+                return $report->tags->pluck('title')->contains(Input::get('query'));
+        });
+        return view('reports.index')->with('reports', $reports->paginate(10));
+    }
+
 }

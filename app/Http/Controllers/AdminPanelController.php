@@ -41,7 +41,7 @@ class AdminPanelController extends Controller
                 return $this->searchByTitle();
             case 'group':
                 return $this->searchByGroup();
-            case 'tags':
+            case 'tag':
                 return $this->searchByTags();
             case 'user': 
                 return $this->searchByUser();

@@ -23,7 +23,12 @@ class DatabaseSeeder extends Seeder
         // $user->groups()->attach('GroupA');
         // $user->groups()->attach('GroupB');
 
-        $this->call(UsersTableSeeder::class);
+        // $this->call(UsersTableSeeder::class);
+
+        factory(App\Report::class, 25)->create()->each(function ($report) {
+            // $report->user()->associate(App\User::find(1));
+            $report->tags()->save(App\Tag::find('testAddingTag'));
+        });
 
     }
 }
