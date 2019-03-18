@@ -82,7 +82,7 @@
                 </div>
             </div>
         </nav>
-        <main class="container-fluid py-4">
+        <main class="container-fluid">
             @yield('content')
         </main>
     </div>

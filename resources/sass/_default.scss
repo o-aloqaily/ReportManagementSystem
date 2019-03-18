@@ -124,8 +124,14 @@
   }
 
   .reportDetailsHeader {
-    background-color: #3A474E;
+    // background-color: #3A474E;
     padding: 50px 100px 50px 100px;
+    background-size: cover;
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.7), 
+      rgba(0, 0, 0, 0.7)
+    ), url(https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+    background-position: center;
   }
 
   .whiteText {
