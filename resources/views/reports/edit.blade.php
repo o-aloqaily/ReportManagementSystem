@@ -21,7 +21,7 @@
 
 
 {{-- content and form --}}
-<div class="row justify-content-center">
+<div class="row justify-content-center py-4">
     <div class="col-md-11 col-11 col-xl-8">
 
         {{-- Edit Report Details --}}

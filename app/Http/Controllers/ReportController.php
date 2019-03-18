@@ -52,9 +52,7 @@ class ReportController extends Controller
             'group' => ['required', Rule::in($user->groups->pluck('title'))],
             'tags' => 'required'
         ]);
-        if(!$validator)
-            $this->invalidFields();
-        
+                
         $fields = $request->only(['title', 'description']);
         $fields['user_id'] = $user->id;
         $fields['group_title'] = $request->group;
@@ -179,10 +177,7 @@ class ReportController extends Controller
             'description' => 'required',
             'group' => ['required', Rule::in($user->groups->pluck('title'))],
             'tags' => 'required'
-        ]);
-        if(!$validator)
-            $this->invalidFields();
-        
+        ]);        
         $report = Report::find($id);
         $report->title = $request->title;
         $report->description = $request->description;

@@ -52,9 +52,9 @@
                       <td class="mdl-data-table__cell--non-numeric">{{ date('M j, Y', strtotime($report->created_at)) }}</td>
                       <td class="mdl-data-table__cell--non-numeric">{{ $report->user->name }}</td>
                       <td class="mdl-data-table__cell--non-numeric">
-                        <a href="{{ route('reports.show', $report->id) }}" class="btn btn-success btn-sm">{{ __('reports.viewButton') }}</a>
-                        <a href="{{ route('reports.edit', $report->id) }}" class="btn btn-primary btn-sm">{{ __('reports.editButton') }}</a>
-                      </td>
+                          <a href="{{ route('reports.show', $report->id) }}" class="btn btn-success btn-sm col-6">{{ __('reports.viewButton') }}</a>
+                          <a href="{{ route('reports.edit', $report->id) }}" class="btn btn-primary btn-sm col-6">{{ __('reports.editButton') }}</a>
+                        </td>
                     </tr>
       
                   @endforeach
@@ -75,18 +75,25 @@
 
 {{-- This script changes the placeholder of the search input according to search by selection by the user --}}
 <script>
+  window.translations = {
+      enterTag: '{{ trans('reports.enterTag') }}',
+      enterGroup: '{{ trans('reports.enterGroup') }}',
+      enterTitle: '{{ trans('reports.enterTitle') }}',
+      enterAuthor: '{{ trans('reports.enterUser') }}',
+  }
+
   document.addEventListener('DOMContentLoaded', function(){ 
     const select = document.querySelector('#searchBy');
     select.addEventListener('change', function() {
       const query = document.querySelector('#query');
       if (select.value == 'tag') {
-        query.placeholder = __('reports.enterTag');
+        query.placeholder = window.translations.enterTag
       } else if (select.value == 'user') {
-        query.placeholder = __('reports.enterUser');
+        query.placeholder = window.translations.enterAuthor
       } else if (select.value == 'group') {
-        query.placeholder = __('reports.enterGroup');
+        query.placeholder = window.translations.enterGroup
       } else {
-        query.placeholder = __('reports.enterTitle');
+        query.placeholder = window.translations.enterTitle
       }
     })
 

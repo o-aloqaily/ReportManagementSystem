@@ -18,9 +18,9 @@ class CreateReportsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
             $table->string('group_title');
-            $table->foreign('group_title')->references('title')->on('groups')->onDelete('cascade');
+            $table->foreign('group_title')->references('title')->on('groups')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

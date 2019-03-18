@@ -20,15 +20,18 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // $user = App\User::find(1);
+        // $role = App\Role::firstOrCreate(['role' => 'Admin'], ['role' => 'Admin']);
+        // $user->roles()->attach($role);
         // $user->groups()->attach('GroupA');
         // $user->groups()->attach('GroupB');
 
-        // $this->call(UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
 
         factory(App\Report::class, 25)->create()->each(function ($report) {
             // $report->user()->associate(App\User::find(1));
-            $report->tags()->save(App\Tag::find('testAddingTag'));
+            $report->tags()->save(App\Tag::firstOrCreate('testAddingTag'));
         });
+
 
     }
 }

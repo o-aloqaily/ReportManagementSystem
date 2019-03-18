@@ -25,7 +25,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('groups.create');
     }
 
     /**
@@ -36,7 +36,14 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = $this->validate($request, [
+            'title' => 'required|min:3',
+        ]);
+        // $id is group's title
+        $group = App\Group::create($request->only(['title']));
+        flash('Successfully created group: '.$group->title)->success();
+        return redirect()->action('AdminPanelController@getGroups');
+
     }
 
     /**
@@ -64,7 +71,12 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $id is group's title
+        $group = App\Group::find($id);
+        if (!$group) {
+            return abort(404);
+        }
+        return view('groups.edit')->with('group', $group);
     }
 
     /**
@@ -76,7 +88,15 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = $this->validate($request, [
+            'title' => 'required|min:3',
+        ]);
+        // $id is group's title
+        $group = App\Group::find($id);
+        $group->title = $request->title;
+        $group->save();
+        flash('Success! Group details has changed.')->success();
+        return redirect()->action('GroupController@edit', $request->title);
     }
 
     /**
@@ -87,6 +107,9 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $group = App\Group::find($id);
+        $group->delete();
+        flash('Successfully deleted group: '.$group->title)->success();
+        return redirect()->action('AdminPanelController@getGroups');
     }
 }

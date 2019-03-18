@@ -22,14 +22,14 @@ class AdminPanelController extends Controller
     public function getGroups()
     {
         // get all groups in the database.
-        $groups = App\Group::all();
+        $groups = App\Group::paginate(10);
         return view('admin.groups')->with('groups', $groups);
     }
 
     public function getUsers()
     {
         // get all users in the database.
-        $users = App\User::all();
+        $users = App\User::paginate(10);
         return view('admin.users')->with('users', $users);
     }
 

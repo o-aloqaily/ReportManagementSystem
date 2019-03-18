@@ -15,9 +15,9 @@ class CreateGroupUserTable extends Migration
     {
         Schema::create('group_user', function (Blueprint $table) {
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('group_title');
-            $table->foreign('group_title')->references('title')->on('groups')->onDelete('cascade');
+            $table->foreign('group_title')->references('title')->on('groups')->onDelete('cascade')->onUpdate('cascade');
             $table->primary(['user_id', 'group_title']);
             $table->timestamps();
         });

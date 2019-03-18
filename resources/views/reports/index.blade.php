@@ -22,7 +22,7 @@
                 <div class="input-group-prepend">
                   <label class="input-group-text" for="searchBy">{{ __('reports.searchBy') }}</label>
                 </div>
-                <select name="searchBy" id="searchBy" class="custom-select" id="searchBy">
+                <select name="searchBy" class="custom-select" id="searchBy">
                   <option value="title" selected>{{ __('reports.title') }}</option>
                   <option value="tag">{{ __('reports.tag') }}</option>
                   <option value="group">{{ __('reports.group') }}</option>
@@ -75,24 +75,25 @@
       </div>
 @endsection
 
-
-
 {{-- This script changes the placeholder of the search input according to search by selection by the user --}}
 <script>
+    window.translations = {
+        enterTag: '{{ trans('reports.enterTag') }}',
+        enterGroup: '{{ trans('reports.enterGroup') }}',
+        enterTitle: '{{ trans('reports.enterTitle') }}',
+    };
+  
   document.addEventListener('DOMContentLoaded', function(){ 
     const select = document.querySelector('#searchBy');
     select.addEventListener('change', function() {
       const query = document.querySelector('#query');
       if (select.value == 'tag') {
-        query.placeholder = __('reports.enterTag');
-      } else if (select.value == 'user') {
-        query.placeholder = __('reports.enterUser');
+        query.placeholder = window.translations.enterTag
       } else if (select.value == 'group') {
-        query.placeholder = __('reports.enterGroup');
+        query.placeholder = window.translations.enterGroup
       } else {
-        query.placeholder = __('reports.enterTitle');
+        query.placeholder = window.translations.enterTitle
       }
     })
-
   })
 </script>

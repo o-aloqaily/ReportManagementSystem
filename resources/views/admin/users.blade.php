@@ -26,8 +26,7 @@
                       <td class="mdl-data-table__cell--non-numeric">{{ $user->groupsCount() }}</td>
                       <td class="mdl-data-table__cell--non-numeric">{{ date('M j, Y', strtotime($user->created_at)) }}</td>
                       <td class="mdl-data-table__cell--non-numeric">
-                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-success btn-sm">{{ __('users.viewButton') }}</a>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm">{{ __('users.editButton') }}</a>
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary btn-sm col-12">{{ __('users.editButton') }}</a>
                       </td>
                     </tr>
       
@@ -36,6 +35,10 @@
                 </tbody>      
             </table>
       </div>
+      <div class="row justify-content-center">
+          {{ $users->links() }}
+      </div>  
+
   @else
     <h5>{{ __('users.noUsers') }}</h4>
   @endif
