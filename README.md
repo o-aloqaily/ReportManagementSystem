@@ -11,6 +11,7 @@ A Report Management System (Archive) with different functionalities such as grou
 ### Features
 * Groups: Admin can create groups to categorize reports and members.
 * Reports: Users can create reports belonging to groups they are enrolled in.
+* Files: Reports can have images as well as audio files stored privately and securely. All files are served for authorized members only.
 * Group Management: Admin can create groups and assign users to these groups. Users can access reports on a group only if they are enrolled in it.
 * Roles: Admin, User.
 * Responsiveness: System is reponsive and can work in any device running on any screen width.
