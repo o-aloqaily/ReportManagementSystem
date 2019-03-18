@@ -1,8 +1,8 @@
 # Report Management System (RMS)
 A Report Management System (Archive) with different functionalities such as groups, roles and reports management.
 
-### Progress
-[========  ] 80%
+### Development Progress
+[========--] 80%
 
 ### Initial Database Schema Model
 ![schema](https://i.imgur.com/xFAQUjA.png)
