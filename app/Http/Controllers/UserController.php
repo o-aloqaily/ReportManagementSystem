@@ -82,10 +82,15 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->groups()->sync($request->groups);
+
         if ($request->password) {
             $user->password = bcrypt($request->password);
         }
-
+        if ($request->adminRole) {
+            $user->roles()->sync(['User', 'Admin']);
+        } else {
+            $user->roles()->sync('User');
+        }
         $user->save();
 
         flash('Successfully updated user details!')->success();

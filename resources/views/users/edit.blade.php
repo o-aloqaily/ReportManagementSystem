@@ -57,6 +57,20 @@
                                 </select>            
                             </div>
                         </div>
+                        <div class="form-group d-flex">
+                                <span class="input-group-text">Roles</span>
+                                <div class="col-sm-10">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="userRole" value="User" name="userRole" checked disabled>
+                                    <label class="form-check-label" for="userRole">User</label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="adminRole" name="adminRole" @if($user->isAdmin()) checked @endif>
+                                    <label class="form-check-label" for="adminRole">Admin</label>
+                                </div>
+    
+                                </div>
+                            
                     </div>
                     <div class="container">
                             <div class="row justify-content-between">
