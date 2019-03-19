@@ -52,7 +52,7 @@ class ReportController extends Controller
             'group' => ['required', Rule::in($user->groups->pluck('title'))],
             'tags' => 'required'
         ]);
-                
+
         $fields = $request->only(['title', 'description']);
         $fields['user_id'] = $user->id;
         $fields['group_title'] = $request->group;
@@ -219,12 +219,8 @@ class ReportController extends Controller
      */
     public function destroy($id)
     {
-        $report = Report::find($id);
-        if (!$report) {
-            return abort(404);
-        }
+        $report = Report::findOrFail($id);
         $report->delete();
-
         return redirect()->action('ReportController@index');
     }
 

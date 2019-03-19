@@ -58,6 +58,21 @@
         </nav>
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
+        {{-- flash message --}}
+        <div class="row justify-content-center">
+            @include('flash::message')
+            @if ($errors->any())
+                <div class="alert alert-danger col-md-8">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
+        </div>
+        
         @yield('content')
       </main>
     </div>

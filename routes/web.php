@@ -23,7 +23,6 @@ Route::get('/reports/search', 'ReportController@search')->middleware('auth');
 Route::resource('reports', 'ReportController')->middleware('auth');
 
 Route::resource('groups', 'GroupController')->middleware('auth');
-Route::resource('users', 'UserController')->middleware('auth');
 
 
 // route to retrieve and delete report images
@@ -40,5 +39,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/groups', 'AdminPanelController@getGroups')->name('groups');
     Route::get('/users', 'AdminPanelController@getUsers')->name('users');
     Route::get('/reports/search', 'AdminPanelController@search')->name('reports.search');
+    Route::resource('users', 'UserController')->middleware('auth')->only(['edit', 'update', 'destroy']);
 
 });
