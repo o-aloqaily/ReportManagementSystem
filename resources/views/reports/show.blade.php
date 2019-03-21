@@ -45,7 +45,7 @@
                         <div class="row">
                         @foreach ($report->images() as $image)
                             <div class="col-4 m-4">
-                                <img id="myImg" class="image img-fluid" src="{{route('serveReportImage', ['filePath' => $image->path])}}" />
+                                <img id="myImg" class="image img-fluid" src="{{route('serveReportFile', ['filePath' => $image->path])}}" />
                             </div>
                         @endforeach
                         </div>
@@ -57,7 +57,7 @@
                         <span>{{ __('reports.noAudios')}}</span>
                     @else
                         @foreach ($report->audios() as $audio)
-                            <audio controls src="{{route('serveReportImage', ['filePath' => $audio->path])}}">
+                            <audio controls src="{{route('serveReportFile', ['filePath' => $audio->path])}}">
                             </audio>
                         @endforeach
                     @endif

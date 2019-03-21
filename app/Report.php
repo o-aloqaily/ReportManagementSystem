@@ -47,7 +47,7 @@ class Report extends Model
 
     public function images() {
         $images = $this->files->filter(function($file, $key) {
-            $allowedExtensions = ['png', 'jpg', 'gif', 'jpeg'];
+            $allowedExtensions = config('files.allowedImagesExtensions');
             $fileExtension = pathinfo($file->path, PATHINFO_EXTENSION);
             return in_array($fileExtension, $allowedExtensions);
         });
@@ -56,7 +56,7 @@ class Report extends Model
 
     public function audios() {
         $audios = $this->files->filter(function($file, $key) {
-            $allowedExtensions = ['mpga', 'mpeg', 'mp3'];
+            $allowedExtensions = config('files.allowedAudioFilesExtensions');
             $fileExtension = pathinfo($file->path, PATHINFO_EXTENSION);
             return in_array($fileExtension, $allowedExtensions);
         });

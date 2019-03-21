@@ -26,9 +26,9 @@ Route::resource('groups', 'GroupController')->middleware('auth');
 
 
 // route to retrieve and delete report images
-Route::get('/storage/app/{filePath}', 'ImageController@serveReportImage')
-->where(['filePath' => '.*'])->name('serveReportImage');
-Route::post('/reports/{id}/images/removeImage', 'ImageController@removeReportImage')->middleware('auth');
+Route::get('/storage/app/{filePath}', 'FileController@serveReportFile')
+->where(['filePath' => '.*'])->name('serveReportFile');
+Route::post('/reports/{id}/images/removeImage', 'FileController@removeReportFile')->middleware('auth');
 Route::post('/reports/{id}/images', 'ReportController@uploadImages');
 Route::post('/reports/{id}/audios', 'ReportController@uploadAudios');
 

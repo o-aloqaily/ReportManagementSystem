@@ -106,13 +106,13 @@
                                 @foreach ($report->images() as $image)
                                         <div class="col-12 col-md-6 col-lg-6 col-xl-4 py-4 px-4">
                                             <div class="row">
-                                                <form id="deleteImageRequest" action="{{ action('ImageController@removeReportImage', $report->id) }}" method="POST"> {{ csrf_field() }}
-                                                    <input type="hidden" name="imagePath" value="{{ $image->path }}">
-                                                    <input type="hidden" name="imageId" value="{{ $image->id }}">
+                                                <form id="deleteImageRequest" action="{{ action('FileController@removeReportFile', $report->id) }}" method="POST"> {{ csrf_field() }}
+                                                    <input type="hidden" name="filePath" value="{{ $image->path }}">
+                                                    <input type="hidden" name="fileId" value="{{ $image->id }}">
                                                     <button class="deleteFileButton" type="button"><i class="deleteImageIcon material-icons">remove_circle</i></button>
                                                 </form>
                                             </div>
-                                            <img class="image img-fluid" src="{{route('serveReportImage', ['filePath' => $image->path])}}" />
+                                            <img class="image img-fluid" src="{{route('serveReportFile', ['filePath' => $image->path])}}" />
                                         </div> 
                                 @endforeach
                             </div>
@@ -127,7 +127,7 @@
                                                 <span class="input-group-text">{{ __('editReport.uploadImages') }}</span>
                                             </div>
                                             <div class="custom-file">
-                                                <input class="custom-file-input" id="photos" type="file" name="photos[]" accept=".jpg, .jpeg, .png, .gif" multiple>
+                                                <input class="custom-file-input" id="photos" type="file" name="photos[]" accept="{{ '.'.implode(', .', config('files.allowedImagesExtensions')) }}" multiple>
                                                 <label class="custom-file-label" id="uploadPhotosLabel" for="photos">{{ __('editReport.uploadImages') }}</label>
                                             </div>
                                         </div>  
@@ -151,15 +151,15 @@
                                 @foreach ($report->audios() as $audio)
                                         <div class="col-12 col-md-6 col-lg-6 col-xl-4 py-4 px-4">
                                             <div class="row">
-                                                <form action="{{ action('ImageController@removeReportImage', $report->id) }}" method="POST">
+                                                <form action="{{ action('FileController@removeReportFile', $report->id) }}" method="POST">
                                                     {{ csrf_field() }}
-                                                    <input type="hidden" name="imagePath" value="{{ $audio->path }}">
-                                                    <input type="hidden" name="imageId" value="{{ $audio->id }}">
+                                                    <input type="hidden" name="filePath" value="{{ $audio->path }}">
+                                                    <input type="hidden" name="fileId" value="{{ $audio->id }}">
                                                     <button class="deleteFileButton" type="button"><i class="deleteImageIcon material-icons">remove_circle</i></button>
                                                 </form>
                                             </div>
                                             <div class="row">
-                                                <audio controls src="{{route('serveReportImage', ['filePath' => $audio->path])}}">
+                                                <audio controls src="{{route('serveReportFile', ['filePath' => $audio->path])}}">
                                                 </audio>
                                             </div>
                                         </div> 
@@ -176,7 +176,7 @@
                                                 <span class="input-group-text">{{ __('editReport.uploadAudios') }}</span>
                                             </div>
                                             <div class="custom-file">
-                                                <input class="custom-file-input" id="audios" type="file" name="audios[]" accept=".mp3" multiple>
+                                                <input class="custom-file-input" id="audios" type="file" name="audios[]" accept="{{ '.'.implode(', .', config('files.allowedAudioFilesExtensions')) }}" multiple>
                                                 <label class="custom-file-label" id="uploadAudiosLabel" for="audios">{{ __('createReport.uploadAudios') }}</label>
                                             </div>
                                         </div>  

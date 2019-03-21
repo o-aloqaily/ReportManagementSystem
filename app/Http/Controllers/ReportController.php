@@ -34,6 +34,7 @@ class ReportController extends Controller
     public function create()
     {
         $user = auth()->user();
+        // dd('.'.implode(' .', config('files.allowedImagesExtensions')));
         return view('reports.create')->with('groups', $user->groups);
     }
 
@@ -61,12 +62,12 @@ class ReportController extends Controller
         $this->createAndAttachTags($report, $request->tags);
 
         if($request->photos) {
-            $uploadStatus = $this->storeFiles($request->photos, ['png', 'jpg', 'gif', 'jpeg'], $report->id);
+            $uploadStatus = $this->storeFiles($request->photos, config('files.allowedImagesExtensions'), $report->id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
         }
         if($request->audios) {
-            $uploadStatus = $this->storeFiles($request->audios, ['mp3', 'mpga'], $report->id);
+            $uploadStatus = $this->storeFiles($request->audios, config('files.allowedAudioFilesExtensions'), $report->id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
         }      
@@ -189,7 +190,7 @@ class ReportController extends Controller
 
     public function uploadImages(Request $request, $id) {
         if ($request->photos) {
-            $uploadStatus = $this->storeFiles($request->photos, ['png', 'jpg', 'gif', 'jpeg'], $id);
+            $uploadStatus = $this->storeFiles($request->photos, config('files.allowedImagesExtensions'), $id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
             flash('Images uploaded!')->success();

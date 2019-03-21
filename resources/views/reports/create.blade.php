@@ -77,15 +77,10 @@
                             <span class="input-group-text">{{ __('createReport.uploadImages') }}</span>
                         </div>
                         <div class="custom-file">
-                            <input class="custom-file-input" id="photos" type="file" name="photos[]" accept=".jpg, .jpeg, .png, .gif" multiple>
+                            <input class="custom-file-input" id="photos" type="file" name="photos[]" accept="{{ '.'.implode(', .', config('files.allowedImagesExtensions')) }}" multiple>
                             <label class="custom-file-label" id="uploadPhotosLabel" for="photos">{{ __('createReport.uploadImages') }}</label>
                         </div>
                     </div>    
-
-                    {{-- <div class="form-group">
-                        <label class="h5" for="photos">{{ __('createReport.uploadImages') }}<span class="h6">{{ __('createReport.uploadImagesHelper') }}</span></label>
-                        <input id="photos" class="d-block" type="file" name="photos[]" accept=".gif,.jpg,.jpeg,.png" multiple>
-                    </div>     --}}
 
                     <div class="form-group marginForSubmitButton">
                         <div class="input-group mb-3">
@@ -93,16 +88,13 @@
                                 <span class="input-group-text">{{ __('createReport.uploadAudios') }}</span>
                             </div>
                             <div class="custom-file">
-                                <input class="custom-file-input" id="audios" type="file" name="audios[]" accept=".mp3" multiple>
+                                <input class="custom-file-input" id="audios" type="file" name="audios[]" accept="{{ '.'.implode(', .', config('files.allowedAudioFilesExtensions')) }}" multiple>
                                 <label class="custom-file-label" id="uploadAudiosLabel" for="audios">{{ __('createReport.uploadAudios') }}</label>
                             </div>
                         </div>        
                    </div>
-                    {{-- <div class="form-group">
-                        <label class="h5" for="audios">{{ __('createReport.uploadAudios') }} <span class="h6">{{ __('createReport.uploadAudiosHelper') }}</span></label>
-                        <input type="file" class="d-block" name="audios[]" accept=".mp3" multiple>
-                    </div> --}}
-                    <button type="submit" class="btn btn-primary btn-block submitReportButton">{{ __('createReport.submitButton') }}</button>
+
+                   <button type="submit" class="btn btn-primary btn-block submitReportButton">{{ __('createReport.submitButton') }}</button>
                 </form>
             </div>
         </div>

@@ -16,9 +16,7 @@ return [
     'description' => 'الوصف',
     'group' => 'المجموعة',
     'uploadImages' => 'رفع الصور',
-    'uploadImagesHelper' => '(يسمح فقط بالصيغ التالية: .gif,.jpg,.jpeg,.png)',
     'uploadAudios' => 'رفع الملفات الصوتية',
-    'uploadAudiosHelper' => '(يسمح فقط بصيغة .mp3)',
     'submitButton' => 'اضافة التقرير'
 
 
