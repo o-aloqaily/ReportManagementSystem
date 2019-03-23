@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Report;
+use App\File;
+use App\Group;
+use App\Policies\ReportPolicy;
+use App\Policies\FilePolicy;
+use App\Policies\GroupPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -13,7 +19,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        Report::class => ReportPolicy::class,
+        Group::class => GroupPolicy::class,
+        File::class => FilePolicy::class,
     ];
 
     /**
@@ -25,20 +33,17 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function ($user, $ability) {
-            if ($user->isAdmin()) {
-                return true;
-            }
-        });
+        // Gate::define('accessReportFile', function ($user, $filePath) {
+        //     if ($user->isAdmin())
+        //         return true;
 
-        Gate::define('accessReportFile', function ($user, $filePath) {
-            foreach($user->groups as $group) {
-                foreach($group->reports as $report) {
-                    if ($report->files->contains('path', $filePath))
-                       return true;
-                }
-            }
-            return false;
-        });
+        //     foreach($user->groups as $group) {
+        //         foreach($group->reports as $report) {
+        //             if ($report->files->contains('path', $filePath))
+        //                return true;
+        //         }
+        //     }
+        //     return false;
+        // });
     }
 }

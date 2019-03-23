@@ -15,4 +15,5 @@ return [
     'reports' => 'Reports',
     'users' => 'Users',
     'groups' => 'Groups',
+    'adminPanel' => 'Admin Panel'
 ];

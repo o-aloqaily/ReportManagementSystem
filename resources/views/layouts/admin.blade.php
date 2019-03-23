@@ -70,7 +70,6 @@
                     </ul>
                 </div>
             @endif
-            
         </div>
         
         @yield('content')

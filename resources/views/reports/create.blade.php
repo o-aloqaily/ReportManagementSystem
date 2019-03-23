@@ -3,19 +3,6 @@
 @section('title', __('reports.newReport'))
 
 @section('content')
-<div class="row justify-content-center">
-    @include('flash::message')
-    @if ($errors->any())
-        <div class="alert alert-danger col-md-8">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-     @endif
-    
-</div>
 <div class="row py-4 justify-content-center">
     <div class="col-md-8">
         <div class="card">

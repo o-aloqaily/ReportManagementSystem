@@ -68,9 +68,14 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @if(auth()->user()->isAdmin())
+                                        <a class="dropdown-item" href="{{ route('admin.reports') }}">
+                                        {{ __('admin.adminPanel') }}
+                                        </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                        onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
                                         {{ __('auth.logout') }}
                                     </a>
 
@@ -85,6 +90,20 @@
             </div>
         </nav>
         <main class="container-fluid">
+            {{-- flash message --}}
+            <div class="row justify-content-center">
+                @include('flash::message')
+                @if ($errors->any())
+                    <div class="alert alert-danger col-md-8">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif  
+            </div>
+    
             @yield('content')
         </main>
     </div>

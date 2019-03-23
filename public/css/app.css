@@ -17204,6 +17204,7 @@ _:-ms-input-placeholder, :root .demo-graph {
 
 .description {
   color: #A9A9A9;
+  word-wrap: break-word;
 }
 
 /* Style the Image Used to Trigger the Modal */

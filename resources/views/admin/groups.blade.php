@@ -19,7 +19,7 @@
             @endif 
         </div>
         <div class="pb-4">
-          <a href="{{ route('groups.create') }}" class="btn btn-primary btn-sm col-12 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"><i class="mdl-color-text--white-white-400 material-icons" role="presentation">add</i>{{ __('groups.addGroupButton') }}</a>
+          <a href="{{ route('admin.groups.create') }}" class="btn btn-primary btn-sm col-12 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"><i class="mdl-color-text--white-white-400 material-icons" role="presentation">add</i>{{ __('groups.addGroupButton') }}</a>
         </div>
         <div class="table-responsive">
           <table class="col-md-12 col-sm-12 col-xs-12 mdl-data-table mdl-js-data-table mdl-shadow--2dp table">
@@ -42,7 +42,7 @@
                   <td class="mdl-data-table__cell--non-numeric">{{ date('M j, Y', strtotime($group->created_at)) }}</td>
                   <td class="mdl-data-table__cell--non-numeric">
                     <a href="{{ route('groups.show', $group->title) }}" class="btn btn-success btn-sm col-6">{{ __('groups.viewButton') }}</a>
-                    <a href="{{ route('groups.edit', $group->title) }}" class="btn btn-primary btn-sm col-6">{{ __('groups.editButton') }}</a>
+                    <a href="{{ route('admin.groups.edit', $group->title) }}" class="btn btn-primary btn-sm col-6">{{ __('groups.editButton') }}</a>
                   </td>
                 </tr>
   

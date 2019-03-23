@@ -55,6 +55,8 @@ class GroupController extends Controller
     public function show($title)
     {
         $group = App\Group::find($title);
+        $this->authorize('view', $group);
+
         if (!$group) {
             return abort(404);
         }
@@ -72,10 +74,7 @@ class GroupController extends Controller
     public function edit($id)
     {
         // $id is group's title
-        $group = App\Group::find($id);
-        if (!$group) {
-            return abort(404);
-        }
+        $group = App\Group::findOrFail($id);
         return view('groups.edit')->with('group', $group);
     }
 

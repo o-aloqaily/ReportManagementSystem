@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Input;
 
 class ReportController extends Controller
 {
+
+    public function __construct()
+    {
+        // $this->authorizeResource(Report::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,10 +37,13 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $user = auth()->user();
-        // dd('.'.implode(' .', config('files.allowedImagesExtensions')));
+        if ($user->groups->count() <= 0) {
+            flash('You cannot create a new report, you are not assigned to any group yet.')->error();
+            return redirect()->action('ReportController@index');
+        }
         return view('reports.create')->with('groups', $user->groups);
     }
 
@@ -46,6 +55,7 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {   
+        $this->authorize('store', Report::class);
         $user = auth()->user();
         $validator = $this->validate($request, [
             'title' => 'required',
@@ -71,6 +81,7 @@ class ReportController extends Controller
             if (!$uploadStatus)
                 return $this->invalidFiles();
         }      
+        flash('Successfully created report: '.$report->title)->success();
         return redirect()->route('reports.index');     
     }
 
@@ -126,12 +137,6 @@ class ReportController extends Controller
         return redirect()->route('reports.create');
     }
 
-    public function invalidFields() {
-        flash('Could not add report, please make sure to fill the fields correctly and try again.')->error();
-        return redirect()->route('reports.create');
-    }
-
-
     /**
      * Display the specified resource.
      *
@@ -140,10 +145,8 @@ class ReportController extends Controller
      */
     public function show($id)
     {
-        $report = Report::find($id);
-        if (!$report) {
-            return abort(404);
-        }
+        $report = Report::findOrFail($id);
+        $this->authorize('show', $report);
         return view('reports.show')->with('report', $report);
     }
 
@@ -155,10 +158,8 @@ class ReportController extends Controller
      */
     public function edit($id)
     {
-        $report = Report::find($id);
-        if (!$report) {
-            return abort(404);
-        }
+        $report = Report::findOrFail($id);
+        $this->authorize('update', $report);
         $user = auth()->user();
         return view('reports.edit')->with('report', $report)->with('groups', $user->groups);
     }
@@ -172,23 +173,30 @@ class ReportController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $report = Report::findOrFail($id);
+        $this->authorize('update', $report);
         $user = auth()->user();
+
         $validator = $this->validate($request, [
             'title' => 'required',
             'description' => 'required',
             'group' => ['required', Rule::in($user->groups->pluck('title'))],
             'tags' => 'required'
         ]);        
-        $report = Report::find($id);
+
         $report->title = $request->title;
         $report->description = $request->description;
         $report->group_title = $request->group;
         $this->createAndAttachTags($report, $request->tags);
         $report->save();
+        flash('Changes have been saved.')->success();
         return redirect()->action('ReportController@edit', $id);
     }
 
     public function uploadImages(Request $request, $id) {
+        $report = Report::findOrFail($id);
+        $this->authorize('uploadFile', $report);
+
         if ($request->photos) {
             $uploadStatus = $this->storeFiles($request->photos, config('files.allowedImagesExtensions'), $id);
             if (!$uploadStatus)
@@ -201,6 +209,9 @@ class ReportController extends Controller
     }
 
     public function uploadAudios(Request $request, $id) {
+        $report = Report::findOrFail($id);
+        $this->authorize('uploadFile', $report);
+
         if ($request->audios) {
             $uploadStatus = $this->storeFiles($request->audios, ['mp3', 'mpga'], $id);
             if (!$uploadStatus)
@@ -221,6 +232,8 @@ class ReportController extends Controller
     public function destroy($id)
     {
         $report = Report::findOrFail($id);
+        $this->authorize('delete', $report);
+
         $report->delete();
         return redirect()->action('ReportController@index');
     }
@@ -254,7 +267,7 @@ class ReportController extends Controller
     public function searchByGroup()
     {
         // TODO authorization
-        $group = Group::find(Input::get('query'));
+        $group = Group::findOrFail(Input::get('query'));
         if (!$group) {
             // if no reports were found, pass null to show no reports.
             return view('reports.index')->with('reports', null);

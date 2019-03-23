@@ -3,23 +3,6 @@
 @section('title', __('reports.editReport').' Report: '.$report->title)
 
 @section('content')
-
-{{-- flash message --}}
-<div class="row justify-content-center">
-    @include('flash::message')
-    @if ($errors->any())
-        <div class="alert alert-danger col-md-8">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-     @endif
-    
-</div>
-
-
 {{-- content and form --}}
 <div class="row justify-content-center py-4">
     <div class="col-md-11 col-11 col-xl-8">
