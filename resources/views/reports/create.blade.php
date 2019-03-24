@@ -43,12 +43,16 @@
                                 @endforeach
                             </select>
                         </div>
-                        
+                        <div class="alert alert-info" role="alert">
+                            {{ __('editReport.tagsHelper') }}
+                            <br>
+                            {{ __('editReport.blankSpaces') }}
+                        </div>                          
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">{{ __('createReport.tags') }}</span>
                             </div>
-                        <input type="text" class="form-control" id="tags" name="tags" placeholder="{{ __('createReport.tagsHelper') }}">
+                        <input type="text" class="form-control" id="tags" name="tags">
                         </div> 
                     </div>                             
                     {{-- <div class="form-group">

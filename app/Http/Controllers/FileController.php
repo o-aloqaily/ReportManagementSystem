@@ -27,9 +27,9 @@ class FileController extends Controller
     }
 
     public function removeReportFile(Request $request, $reportId) {
-        $this->authorize('accessReportFile', [File::class, $filePath]);
-
         $filePath = $request->input('filePath');
+        $this->authorize('accessReportFile', [File::class, $filePath]);
+        
         if (!Storage::disk('local')->exists($filePath)) {
             // The file does not exist or the user is not allowed to access it.
             return abort(404);

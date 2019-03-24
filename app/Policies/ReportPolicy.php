@@ -24,7 +24,8 @@ class ReportPolicy extends ParentPolicy
 
     public function update(User $user, Report $report)
     {
-        return $user->groups->pluck('reports')->flatten()->contains($report);
+        return $user->groups->pluck('reports')->flatten()->contains($report)
+                && $user->groups->contains(request()->group);
     }
 
     public function delete(User $user, Report $report)

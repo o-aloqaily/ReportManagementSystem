@@ -39,7 +39,11 @@
                             </select>
                         </div>    
                     </div>
-                    <p>{{ __('createReport.tagsHelper') }}</p>
+                    <div class="alert alert-info" role="alert">
+                        {{ __('editReport.tagsHelper') }}
+                        <br>
+                        {{ __('editReport.blankSpaces') }}
+                    </div>                      
                     <div class="form-group">                        
                         <div class="input-group mb-4">
                             <div class="input-group-prepend">
@@ -85,14 +89,14 @@
                         @if (!$report->images())
                             <span>This report has no pictures.</span>
                         @else
-                            <div class="row" id="filesContainer">
+                            <div class="row filesContainer">
                                 @foreach ($report->images() as $image)
                                         <div class="col-12 col-md-6 col-lg-6 col-xl-4 py-4 px-4">
                                             <div class="row">
                                                 <form id="deleteImageRequest" action="{{ action('FileController@removeReportFile', $report->id) }}" method="POST"> {{ csrf_field() }}
                                                     <input type="hidden" name="filePath" value="{{ $image->path }}">
                                                     <input type="hidden" name="fileId" value="{{ $image->id }}">
-                                                    <button class="deleteFileButton" type="button"><i class="deleteImageIcon material-icons">remove_circle</i></button>
+                                                    <button class="deleteFileButton" type="button"><i class="deleteFileIcon material-icons">remove_circle</i></button>
                                                 </form>
                                             </div>
                                             <img class="image img-fluid" src="{{route('serveReportFile', ['filePath' => $image->path])}}" />
@@ -130,7 +134,7 @@
                         @if (!$report->audios())
                             <span>This report has no audio files.</span>
                         @else
-                            <div class="row" id="filesContainer">
+                            <div class="row filesContainer">
                                 @foreach ($report->audios() as $audio)
                                         <div class="col-12 col-md-6 col-lg-6 col-xl-4 py-4 px-4">
                                             <div class="row">
@@ -138,7 +142,7 @@
                                                     {{ csrf_field() }}
                                                     <input type="hidden" name="filePath" value="{{ $audio->path }}">
                                                     <input type="hidden" name="fileId" value="{{ $audio->id }}">
-                                                    <button class="deleteFileButton" type="button"><i class="deleteImageIcon material-icons">remove_circle</i></button>
+                                                    <button class="deleteFileButton" type="button"><i class="deleteFileIcon material-icons">remove_circle</i></button>
                                                 </form>
                                             </div>
                                             <div class="row">
@@ -205,49 +209,64 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
 <script>
         document.addEventListener('DOMContentLoaded', function(){
             // Get the modal
             var modal = document.getElementById('myModal');
         
             // Get the image and insert it inside the modal - use its "alt" text as a caption
-            var filesContainer = document.getElementById('filesContainer');
+            var filesContainers = document.getElementsByClassName('filesContainer');
             var modalImg = document.getElementById("img01");
             var captionText = document.getElementById("caption");
-            filesContainer.onclick = function(event){
-                if (event.target.classList.contains('deleteFileButton') || event.target.classList.contains('deleteImageIcon')) {
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: "You won't be able to revert this!",
-                        type: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    })
-                    .then((result) => {
-                        if (result.value) {
-                            if (event.target.parentElement.tagName == 'BUTTON') // the icon was clicked, so propagate to the form by going to the second parent
-                                event.target.parentElement.parentElement.submit();
-                            else // the actuall button was clicked, so the next direct parent is the form
-                                event.target.parentElement.submit();
-                        }
-                    })
-                } else if (event.target.classList.contains('image')) {
-                    modal.style.display = "block";
-                    modalImg.src = event.target.src;
-                    captionText.innerHTML = event.target.alt;
-                } else {
-                    return;
+
+            // transform the HTMLCollection to array, then add an event listener to each
+            // to listen for clicks and call appropriate functions
+            [...filesContainers].forEach((container) => {
+                container.onclick = function(event){
+                    if (event.target.classList.contains('deleteFileButton') || event.target.classList.contains('deleteFileIcon')) {
+                        fireSwal(event)
+                    } else if (event.target.classList.contains('image')) {
+                        modal.style.display = "block";
+                        modalImg.src = event.target.src;
+                        captionText.innerHTML = event.target.alt;
+                    } else {
+                        return;
+                    }
                 }
-            }
+            })
         
+
+
+
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close")[0];
         
             // When the user clicks on <span> (x), close the modal
             span.onclick = function() { 
                 modal.style.display = "none";
+            }
+
+
+
+            function fireSwal(event){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                })
+                .then((result) => {
+                    if (result.value) {
+                        if (event.target.parentElement.tagName == 'BUTTON') // the icon was clicked, so propagate to the form by going to the second parent
+                            event.target.parentElement.parentElement.submit();
+                        else // the actuall button was clicked, so the next direct parent is the form
+                            event.target.parentElement.submit();
+                    }
+                })
             }
         })
 </script>
@@ -276,7 +295,6 @@
 </script>
 
 <script>
-    
     document.addEventListener('DOMContentLoaded', function(){
         const deleteButton = document.querySelector('#deleteReportButton')
         deleteButton.addEventListener('click', function(){

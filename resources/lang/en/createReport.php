@@ -14,7 +14,8 @@ return [
     // fields 
     'titleField' => 'Title',
     'tags' => 'Tags',
-    'tagsHelper' => 'Enter tags separated by a comma (tag1, tag2, tag3... etc.)',
+    'tagsHelper' => '• Enter tags separated by a comma (tag1, tag2, tag3... etc.)',
+    'blankSpaces' => '• Blank spaces included in tags will be ignored.',
     'description' => 'Description',
     'group' => 'Group',
     'uploadImages' => 'Upload Images',

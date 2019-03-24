@@ -40,11 +40,16 @@ class ReportController extends Controller
     public function create(Request $request)
     {
         $user = auth()->user();
-        if ($user->groups->count() <= 0) {
+        $groups = $user->groups;
+        if ($user->isAdmin()) {
+            // if the user is admin allow him to create reports on any group.
+            $groups = Group::all();
+        } else if ($user->groups->count() <= 0) {
             flash('You cannot create a new report, you are not assigned to any group yet.')->error();
             return redirect()->action('ReportController@index');
         }
-        return view('reports.create')->with('groups', $user->groups);
+
+        return view('reports.create')->with('groups', $groups);
     }
 
     /**
@@ -87,8 +92,14 @@ class ReportController extends Controller
 
     // Create tags and attach them to the report (if the tag exist, it will be attached immediately).
     public function createAndAttachTags($report, $tags) {
+        // first detach all tags, so when a tag is edited it gets edited and not duplicated.
+        $report->tags()->detach();
+        
+        // break tags into an array of tags
         $tags = str_replace(' ','',$tags);
         $tags = explode(',', $tags);
+
+        // remove any unnecessary items in the array
         $tags = array_filter($tags, function($value, $key){
             if ($value === '')
                 return false;
@@ -96,6 +107,7 @@ class ReportController extends Controller
                 return true;
         }, ARRAY_FILTER_USE_BOTH);
 
+        // attach tags
         foreach($tags as $tag) {
             $tag = Tag::firstOrCreate(['title' => $tag], ['title' => $tag]);
             if($report->tags->contains($tag)) {
@@ -161,7 +173,11 @@ class ReportController extends Controller
         $report = Report::findOrFail($id);
         $this->authorize('update', $report);
         $user = auth()->user();
-        return view('reports.edit')->with('report', $report)->with('groups', $user->groups);
+        $groups = $user->groups;
+        if ($user->isAdmin()) // allow the admin to switch the group of the reprot to any group.
+            $groups = Group::all();
+
+        return view('reports.edit')->with('report', $report)->with('groups', $groups);
     }
 
     /**
@@ -182,7 +198,7 @@ class ReportController extends Controller
             'description' => 'required',
             'group' => ['required', Rule::in($user->groups->pluck('title'))],
             'tags' => 'required'
-        ]);        
+        ]);
 
         $report->title = $request->title;
         $report->description = $request->description;
@@ -235,6 +251,7 @@ class ReportController extends Controller
         $this->authorize('delete', $report);
 
         $report->delete();
+        flash('Report has been successfully deleted.')->success();
         return redirect()->action('ReportController@index');
     }
 
@@ -267,7 +284,7 @@ class ReportController extends Controller
     public function searchByGroup()
     {
         // TODO authorization
-        $group = Group::findOrFail(Input::get('query'));
+        $group = Group::find(Input::get('query'));
         if (!$group) {
             // if no reports were found, pass null to show no reports.
             return view('reports.index')->with('reports', null);
