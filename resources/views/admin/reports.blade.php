@@ -3,8 +3,8 @@
 @section('title', __('admin.reports'))
 
 @section('content')
-  @if (count($reports) > 0)
       <div class="contentContainer">
+        @if (count($reports) > 0)
         {{-- Search Section --}}
       <form class="form-inline row" action="{{ route('admin.reports.search') }}" method="GET">
             <div class="input-group mb-3 col-sm-6 col-xs-5">
@@ -65,10 +65,10 @@
           <div class="row justify-content-center">
               {{ $reports->links() }}
           </div>  
+          @else
+            <h5>{{ __('reports.noReports') }}</h4>
+          @endif      
       </div>
-  @else
-    <h5>{{ __('reports.noReports') }}</h4>
-  @endif
 @endsection
 
 

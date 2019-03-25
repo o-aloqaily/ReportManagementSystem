@@ -25,7 +25,7 @@ return [
     'enterTag' => "Enter a tag...",
     'enterUser' => "Enter an author name...",
     'searchButton' => 'Search',
-    'userHeading' => 'These are the reports belonging to your groups.',
+    'userHeading' => 'These are the reports belonging to your groups only.',
     'create' => 'New Report',
     'pictures' => 'Report Pictures',
     'audios' => 'Report Audio Files',

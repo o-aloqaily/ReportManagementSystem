@@ -9,14 +9,16 @@ use App\File;
 use App\Tag;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Input;
+use App\Services\StoreReportServices;
 
 
 class ReportController extends Controller
 {
+    protected $reportStoringServices;
 
-    public function __construct()
+    public function __construct(StoreReportServices $services)
     {
-        // $this->authorizeResource(Report::class);
+        $this->reportStoringServices = $services;
     }
 
     /**
@@ -65,7 +67,7 @@ class ReportController extends Controller
         $validator = $this->validate($request, [
             'title' => 'required',
             'description' => 'required',
-            'group' => ['required', Rule::in($user->groups->pluck('title'))],
+            'group' => 'required',
             'tags' => 'required'
         ]);
 
@@ -74,15 +76,15 @@ class ReportController extends Controller
         $fields['group_title'] = $request->group;
         $report = Report::create($fields);
 
-        $this->createAndAttachTags($report, $request->tags);
+        $this->reportStoringServices->createAndAttachTags($report, $request->tags);
 
         if($request->photos) {
-            $uploadStatus = $this->storeFiles($request->photos, config('files.allowedImagesExtensions'), $report->id);
+            $uploadStatus = $this->reportStoringServices->storeFiles($request->photos, config('files.allowedImagesExtensions'), $report->id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
         }
         if($request->audios) {
-            $uploadStatus = $this->storeFiles($request->audios, config('files.allowedAudioFilesExtensions'), $report->id);
+            $uploadStatus = $this->reportStoringServices->storeFiles($request->audios, config('files.allowedAudioFilesExtensions'), $report->id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
         }      
@@ -90,59 +92,6 @@ class ReportController extends Controller
         return redirect()->route('reports.index');     
     }
 
-    // Create tags and attach them to the report (if the tag exist, it will be attached immediately).
-    public function createAndAttachTags($report, $tags) {
-        // first detach all tags, so when a tag is edited it gets edited and not duplicated.
-        $report->tags()->detach();
-        
-        // break tags into an array of tags
-        $tags = str_replace(' ','',$tags);
-        $tags = explode(',', $tags);
-
-        // remove any unnecessary items in the array
-        $tags = array_filter($tags, function($value, $key){
-            if ($value === '')
-                return false;
-            else
-                return true;
-        }, ARRAY_FILTER_USE_BOTH);
-
-        // attach tags
-        foreach($tags as $tag) {
-            $tag = Tag::firstOrCreate(['title' => $tag], ['title' => $tag]);
-            if($report->tags->contains($tag)) {
-                continue;
-            } else {
-                $report->tags()->attach($tag);
-            }
-        }
-        $report->save();
-    }
-
-    /* 
-    * This function takes a request, stores t into the database
-    * and attaches them to the related report.
-    * returns true if all files were uploaded, false otherwise.
-    */
-    public function storeFiles($files, $allowedExtensions, $reportId) {
-        foreach($files as $file){
-            $filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            // check whether the file has an accepted extension
-            $check=in_array($extension,$allowedExtensions);
-
-            if($check) {
-                $filename = $file->store('reportsFiles');
-                File::create([
-                    'report_id' => $reportId,
-                    'path' => $filename
-                ]);
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
 
     public function invalidFiles() {
         flash('Could not upload files, please make sure to upload valid files then try again.')->error();
@@ -203,7 +152,7 @@ class ReportController extends Controller
         $report->title = $request->title;
         $report->description = $request->description;
         $report->group_title = $request->group;
-        $this->createAndAttachTags($report, $request->tags);
+        $this->reportStoringServices->createAndAttachTags($report, $request->tags);
         $report->save();
         flash('Changes have been saved.')->success();
         return redirect()->action('ReportController@edit', $id);
@@ -214,7 +163,7 @@ class ReportController extends Controller
         $this->authorize('uploadFile', $report);
 
         if ($request->photos) {
-            $uploadStatus = $this->storeFiles($request->photos, config('files.allowedImagesExtensions'), $id);
+            $uploadStatus = $this->reportStoringServices->storeFiles($request->photos, config('files.allowedImagesExtensions'), $id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
             flash('Images uploaded!')->success();
@@ -229,7 +178,7 @@ class ReportController extends Controller
         $this->authorize('uploadFile', $report);
 
         if ($request->audios) {
-            $uploadStatus = $this->storeFiles($request->audios, ['mp3', 'mpga'], $id);
+            $uploadStatus = $this->reportStoringServices->storeFiles($request->audios, ['mp3', 'mpga'], $id);
             if (!$uploadStatus)
                 return $this->invalidFiles();
             flash('Audio files uploaded!')->success();

@@ -43,7 +43,7 @@ class StoreReportServices
     }
 
     /* 
-    * This function takes a base64 array of files, stores it into the database
+    * This function takes a base64 array of files, stores them into the database
     * and attaches them to the related report.
     * returns true if all files were uploaded, false otherwise.
     */
@@ -66,4 +66,31 @@ class StoreReportServices
         }
         return true;
     }
+
+
+    /* 
+    * This function takes an array of files, stores them into the database
+    * and attaches them to the related report.
+    * returns true if all files were uploaded, false otherwise.
+    */
+    public function storeFiles($files, $allowedExtensions, $reportId) {
+        foreach($files as $file){
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            // check whether the file has an accepted extension
+            $check=in_array($extension,$allowedExtensions);
+
+            if($check) {
+                $filename = $file->store('reportsFiles');
+                File::create([
+                    'report_id' => $reportId,
+                    'path' => $filename
+                ]);
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

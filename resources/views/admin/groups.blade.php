@@ -3,7 +3,6 @@
 @section('title', __('admin.groups'))
 
 @section('content')
-  @if (count($groups) > 0)
       <div class="contentContainer">
         {{-- flash message --}}
         <div class="row justify-content-center">
@@ -21,6 +20,7 @@
         <div class="pb-4">
           <a href="{{ route('admin.groups.create') }}" class="btn btn-primary btn-sm col-12 col-sm-3 col-md-2 d-flex justify-content-center align-items-center"><i class="mdl-color-text--white-white-400 material-icons" role="presentation">add</i>{{ __('groups.addGroupButton') }}</a>
         </div>
+        @if (count($groups) > 0)
         <div class="table-responsive">
           <table class="col-md-12 col-sm-12 col-xs-12 mdl-data-table mdl-js-data-table mdl-shadow--2dp table">
             <thead>
@@ -54,9 +54,9 @@
           <div class="row justify-content-center">
               {{ $groups->links() }}
           </div>  
+          @else
+          <h5>{{ __('groups.noGroups') }}</h4>
+        @endif      
       </div>
-  @else
-    <h5>{{ __('groups.noGroups') }}</h4>
-  @endif
 @endsection
 
