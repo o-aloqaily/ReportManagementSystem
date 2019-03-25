@@ -3,6 +3,9 @@
 @section('title', __('reports.newReport'))
 
 @section('content')
+@if ($errors->any())
+        {{ implode('', $errors->all('<div>:message</div>')) }}
+@endif
 <div class="row py-4 justify-content-center">
     <div class="col-md-8">
         <div class="card">

@@ -33,17 +33,5 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Gate::define('accessReportFile', function ($user, $filePath) {
-        //     if ($user->isAdmin())
-        //         return true;
-
-        //     foreach($user->groups as $group) {
-        //         foreach($group->reports as $report) {
-        //             if ($report->files->contains('path', $filePath))
-        //                return true;
-        //         }
-        //     }
-        //     return false;
-        // });
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,26 +12,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('groups')->insert([
-        //     'title' => 'GroupA',
-        // ]);
+        $roleAdmin = App\Role::firstOrCreate(['role' => 'Admin'], ['role' => 'Admin']);
+        $roleUser = App\Role::firstOrCreate(['role' => 'User'], ['role' => 'Admin']);
 
-        // DB::table('groups')->insert([
-        //     'title' => 'GroupB',
-        // ]);
+        $user = App\User::firstOrCreate(['id' => 1], ['name' => 'Admin', 'email' => 'admin@rms.com', 'password' => Hash::make('secret')]);
+        $user->roles()->attach($roleAdmin);
 
-        // $user = App\User::find(1);
-        // $role = App\Role::firstOrCreate(['role' => 'Admin'], ['role' => 'Admin']);
-        // $user->roles()->attach($role);
-        // $user->groups()->attach('GroupA');
-        // $user->groups()->attach('GroupB');
+        // $this->call(UsersTableSeeder::class);
 
-        $this->call(UsersTableSeeder::class);
-
-        factory(App\Report::class, 25)->create()->each(function ($report) {
-            // $report->user()->associate(App\User::find(1));
-            $report->tags()->save(App\Tag::firstOrCreate('testAddingTag'));
-        });
+        // factory(App\Report::class, 25)->create()->each(function ($report) {
+        //     $report->user()->associate(App\User::find(1));
+        //     $report->tags()->save(App\Tag::firstOrCreate('testAddingTag'));
+        // });
 
 
     }
