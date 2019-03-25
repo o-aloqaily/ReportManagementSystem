@@ -13,10 +13,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $roleAdmin = App\Role::firstOrCreate(['role' => 'Admin'], ['role' => 'Admin']);
-        $roleUser = App\Role::firstOrCreate(['role' => 'User'], ['role' => 'Admin']);
+        $roleUser = App\Role::firstOrCreate(['role' => 'User'], ['role' => 'Admin']);        
 
         $user = App\User::firstOrCreate(['id' => 1], ['name' => 'Admin', 'email' => 'admin@rms.com', 'password' => Hash::make('secret')]);
         $user->roles()->attach($roleAdmin);
+
+        $group = App\Group::firstOrCreate(['title' => 'Default Group']);
+        $user->groups()->attach($group);
 
         // $this->call(UsersTableSeeder::class);
 
