@@ -20,10 +20,10 @@ A Report Management System (Archive) with different functionalities such as grou
 * API endpoint: Available to port existing reports or bulk store reports into the system.
 
 ### API Request
-To access and use the system's API, configure your **api token** in the env file and use it as a Baerer token for authorization when sending requests.
-**Request Method**: POST
-**Endpoint**: /api/v1/storeReports
-**Authorization**: Baerer token.
+To access and use the system's API, configure your **api token** in the env file and use it as a Baerer token for authorization when sending requests.\
+**Request Method**: POST\
+**Endpoint**: /api/v1/storeReports\
+**Authorization**: Baerer token.\
 Example:
 ```javascript
 [
